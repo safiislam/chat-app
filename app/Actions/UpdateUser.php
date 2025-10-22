@@ -17,7 +17,7 @@ final readonly class UpdateUser
             $updates['email_verified_at'] = null;
         }
 
-        if (! empty($updates)) {
+        if ($updates !== []) {
             $user->update($updates);
         }
     }
