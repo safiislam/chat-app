@@ -1,5 +1,17 @@
 import { type NavItem, type NavSection } from '@/types';
-import { Banknote, BarChartBig, CalendarCheck, CreditCard, FileText, HomeIcon, Settings2, Shield, Stethoscope, UserCircle2, Users } from 'lucide-react';
+import {
+    Banknote,
+    BarChartBig,
+    CalendarCheck,
+    CreditCard,
+    FileText,
+    HomeIcon,
+    Settings2,
+    Shield,
+    Stethoscope,
+    UserCircle2,
+    Users,
+} from 'lucide-react';
 
 export function useAdminNavigation() {
     const mainNavItems: NavItem[] = [
@@ -38,7 +50,6 @@ export function useAdminNavigation() {
     ];
 
     const testSection: NavItem[] = [
-
         {
             title: 'Reservations',
             href: '/reservations',
@@ -61,7 +72,6 @@ export function useAdminNavigation() {
         },
     ];
     const financeSection: NavItem[] = [
-
         {
             title: 'Accounts',
             href: '/accounts',

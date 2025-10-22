@@ -10,20 +10,20 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
+import { useAdminNavigation } from '@/hooks/use-admin-navigation';
 import { dashboard } from '@/routes';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/react';
-import { BookOpen, Folder, LayoutGrid } from 'lucide-react';
+import { BookOpen, Folder } from 'lucide-react';
 import AppLogo from './app-logo';
-import { useAdminNavigation } from '@/hooks/use-admin-navigation';
 
-const mainNavItems: NavItem[] = [
-    {
-        title: 'Dashboard',
-        href: dashboard(),
-        icon: LayoutGrid,
-    },
-];
+// const mainNavItems: NavItem[] = [
+//     {
+//         title: 'Dashboard',
+//         href: dashboard(),
+//         icon: LayoutGrid,
+//     },
+// ];
 
 const footerNavItems: NavItem[] = [
     {
@@ -39,9 +39,8 @@ const footerNavItems: NavItem[] = [
 ];
 
 export function AppSidebar() {
-
     const { navSections } = useAdminNavigation();
-    
+
     return (
         <Sidebar collapsible="icon" variant="inset">
             <SidebarHeader>

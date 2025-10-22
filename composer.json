@@ -82,19 +82,19 @@
             "npx npm-check-updates -u"
         ],
         "lint": [
-            "rector",
-            "pint --parallel",
+            "./vendor/bin/rector",
+            "./vendor/bin/pint --parallel",
             "npm run lint"
         ],
-        "test:type-coverage": "pest --type-coverage --min=100",
+        "test:type-coverage": "./vendor/bin/pest --type-coverage --min=100",
         "test:lint": [
-            "pint --parallel --test",
-            "rector --dry-run",
+            "./vendor/bin/pint --parallel --test",
+            "./vendor/bin/rector --dry-run",
             "npm run test:lint"
         ],
-        "test:unit": "pest --parallel --coverage --exactly=100.0",
+        "test:unit": "./vendor/bin/pest --parallel --coverage --exactly=100.0",
         "test:types": [
-            "phpstan",
+            "./vendor/bin/phpstan",
             "npm run test:types"
         ],
         "test": [
