@@ -1,0 +1,20 @@
+{
+    "mcpServers": {
+        "laravel-boost": {
+            "command": "/Users/m0shiur/Library/Application Support/Herd/bin/php84",
+            "args": [
+                "/Users/m0shiur/work/nunostarter/artisan",
+                "boost:mcp"
+            ]
+        },
+        "herd": {
+            "command": "/Users/m0shiur/Library/Application Support/Herd/bin/php84",
+            "args": [
+                "/Applications/Herd.app/Contents/Resources/herd-mcp.phar"
+            ],
+            "env": {
+                "SITE_PATH": "/Users/m0shiur/work/nunostarter"
+            }
+        }
+    }
+}
