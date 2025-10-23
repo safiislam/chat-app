@@ -1,6 +1,4 @@
-import { NavFooter } from '@/components/nav-footer';
-import { NavMain } from '@/components/nav-main';
-import { NavUser } from '@/components/nav-user';
+
 import {
     Sidebar,
     SidebarContent,
@@ -15,7 +13,10 @@ import { dashboard } from '@/routes';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/react';
 import { BookOpen, Folder } from 'lucide-react';
-import AppLogo from './app-logo';
+import AppLogo from '../app-logo';
+import { NavMain } from '../navigation/nav-main';
+import { NavFooter } from '../navigation/nav-footer';
+import { NavUser } from '../navigation/nav-user';
 
 // const mainNavItems: NavItem[] = [
 //     {
