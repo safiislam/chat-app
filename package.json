@@ -26,7 +26,7 @@
     },
     "dependencies": {
         "@headlessui/react": "^2.2.9",
-        "@inertiajs/react": "^2.2.9",
+        "@inertiajs/react": "^2.2.10",
         "@radix-ui/react-avatar": "^1.1.10",
         "@radix-ui/react-checkbox": "^1.3.3",
         "@radix-ui/react-collapsible": "^1.1.12",
@@ -57,7 +57,7 @@
         "tailwindcss": "^4.1.15",
         "tailwindcss-animate": "^1.0.7",
         "typescript": "^5.9.3",
-        "vite": "^7.1.11"
+        "vite": "^7.1.12"
     },
     "optionalDependencies": {
         "@rollup/rollup-linux-x64-gnu": "4.52.5",
