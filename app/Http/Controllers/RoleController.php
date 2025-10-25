@@ -15,12 +15,6 @@ use Spatie\Permission\Models\Role;
 
 final class RoleController extends Controller
 {
-    private const SUCCESS_MESSAGES = [
-        'created' => 'Role created successfully.',
-        'updated' => 'Role updated successfully.',
-        'deleted' => 'Role deleted successfully.',
-    ];
-
     /**
      * Display a listing of roles.
      */
@@ -61,7 +55,7 @@ final class RoleController extends Controller
 
         return redirect()
             ->route('roles.index')
-            ->with('success', self::SUCCESS_MESSAGES['created']);
+            ->with('success', $this->getSuccessMessages()['created']);
     }
 
     /**
@@ -96,7 +90,7 @@ final class RoleController extends Controller
 
         return redirect()
             ->route('roles.index')
-            ->with('success', self::SUCCESS_MESSAGES['updated']);
+            ->with('success', $this->getSuccessMessages()['updated']);
     }
 
     /**
@@ -108,7 +102,21 @@ final class RoleController extends Controller
 
         return redirect()
             ->route('roles.index')
-            ->with('success', self::SUCCESS_MESSAGES['deleted']);
+            ->with('success', $this->getSuccessMessages()['deleted']);
+    }
+
+    /**
+     * Get success messages for role operations.
+     *
+     * @return array<string, string>
+     */
+    private function getSuccessMessages(): array
+    {
+        return [
+            'created' => 'Role created successfully.',
+            'updated' => 'Role updated successfully.',
+            'deleted' => 'Role deleted successfully.',
+        ];
     }
 
     /**
@@ -149,25 +157,28 @@ final class RoleController extends Controller
         /** @var array<string, array<string, array<string>>> $groupedPermissions */
         $groupedPermissions = [];
 
-        if (!is_array($permissionsFromConfig)) {
+        if (! is_array($permissionsFromConfig)) {
             return $groupedPermissions;
         }
 
         foreach ($permissionsFromConfig as $mainGroup => $subGroups) {
-            if (!is_array($subGroups)) {
+            if (! is_array($subGroups)) {
                 continue;
             }
 
+            /** @var string $mainGroupKey */
             $mainGroupKey = (string) $mainGroup;
 
             foreach ($subGroups as $subGroup => $permissions) {
-                if (!is_array($permissions)) {
+                if (! is_array($permissions)) {
                     continue;
                 }
 
+                /** @var string $subGroupKey */
                 $subGroupKey = (string) $subGroup;
 
                 // Filter and validate permissions to ensure they are strings
+                /** @var array<string> $validStringPermissions */
                 $validStringPermissions = [];
                 foreach ($permissions as $permission) {
                     if (is_string($permission) && in_array($permission, $permissionsFromDb, true)) {
