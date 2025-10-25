@@ -11,7 +11,7 @@ it('deletes a role', function (): void {
     $result = app(DeleteRole::class)->handle($role);
 
     expect($result)->toBeTrue()
-        ->and(Role::where('name', 'To Delete')->exists())->toBeFalse();
+        ->and(Role::query()->where('name', 'To Delete')->exists())->toBeFalse();
 });
 
 it('returns true when role is deleted successfully', function (): void {

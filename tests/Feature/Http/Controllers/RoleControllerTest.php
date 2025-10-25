@@ -21,7 +21,7 @@ it('displays the roles index page', function (): void {
     actingAs($this->user)
         ->get(route('roles.index'))
         ->assertOk()
-        ->assertInertia(fn ($page) => $page
+        ->assertInertia(fn($page) => $page
             ->component('roles/index')
             ->has('roles', 2));
 });
@@ -33,7 +33,7 @@ it('displays the create role page', function (): void {
     actingAs($this->user)
         ->get(route('roles.create'))
         ->assertOk()
-        ->assertInertia(fn ($page) => $page
+        ->assertInertia(fn($page) => $page
             ->component('roles/create')
             ->has('allPermissions'));
 });
@@ -61,7 +61,7 @@ it('stores a new role with permissions', function (): void {
         ->assertRedirect(route('roles.index'))
         ->assertSessionHas('success', 'Role created successfully.');
 
-    $role = Role::where('name', 'Content Manager')->first();
+    $role = Role::query()->where('name', 'Content Manager')->first();
     expect($role)->not->toBeNull()
         ->and($role->hasPermissionTo('create-posts'))->toBeTrue()
         ->and($role->hasPermissionTo('edit-posts'))->toBeTrue();
@@ -111,7 +111,7 @@ it('displays the edit role page', function (): void {
     actingAs($this->user)
         ->get(route('roles.edit', $role))
         ->assertOk()
-        ->assertInertia(fn ($page) => $page
+        ->assertInertia(fn($page) => $page
             ->component('roles/edit')
             ->has('role')
             ->has('allPermissions'));
@@ -201,7 +201,7 @@ it('loads roles with permissions relationship on index', function (): void {
     actingAs($this->user)
         ->get(route('roles.index'))
         ->assertOk()
-        ->assertInertia(fn ($page) => $page
+        ->assertInertia(fn($page) => $page
             ->component('roles/index')
             ->has('roles.0.permissions'));
 });
@@ -213,7 +213,7 @@ it('includes grouped permissions on create page', function (): void {
     actingAs($this->user)
         ->get(route('roles.create'))
         ->assertOk()
-        ->assertInertia(fn ($page) => $page
+        ->assertInertia(fn($page) => $page
             ->component('roles/create')
             ->has('permissions'));
 });
@@ -225,7 +225,103 @@ it('includes grouped permissions on edit page', function (): void {
     actingAs($this->user)
         ->get(route('roles.edit', $role))
         ->assertOk()
-        ->assertInertia(fn ($page) => $page
+        ->assertInertia(fn($page) => $page
             ->component('roles/edit')
             ->has('permissions'));
+});
+
+it('handles when permissions config is not an array', function (): void {
+    config(['permissions' => 'invalid-config']);
+
+    actingAs($this->user)
+        ->get(route('roles.create'))
+        ->assertOk()
+        ->assertInertia(fn($page) => $page
+            ->component('roles/create')
+            ->has('permissions')
+            ->where('permissions', []));
+});
+
+it('handles when config subgroup is not an array', function (): void {
+    config(['permissions' => [
+        'platform' => 'invalid-subgroup',
+        'valid' => [
+            'test' => ['access_test'],
+        ],
+    ]]);
+
+    Permission::create(['name' => 'access_test']);
+
+    actingAs($this->user)
+        ->get(route('roles.create'))
+        ->assertOk()
+        ->assertInertia(fn($page) => $page
+            ->component('roles/create')
+            ->has('permissions'));
+});
+
+it('handles when config permissions array is not an array', function (): void {
+    config(['permissions' => [
+        'platform' => [
+            'invalid' => 'not-an-array',
+            'valid' => ['access_valid'],
+        ],
+    ]]);
+
+    Permission::create(['name' => 'access_valid']);
+
+    actingAs($this->user)
+        ->get(route('roles.create'))
+        ->assertOk()
+        ->assertInertia(fn($page) => $page
+            ->component('roles/create')
+            ->has('permissions'));
+});
+
+it('filters out non-string permissions from config', function (): void {
+    config(['permissions' => [
+        'platform' => [
+            'mixed' => [
+                'valid_permission',
+                123,
+                null,
+                ['nested'],
+                'another_valid',
+            ],
+        ],
+    ]]);
+
+    Permission::create(['name' => 'valid_permission']);
+    Permission::create(['name' => 'another_valid']);
+
+    actingAs($this->user)
+        ->get(route('roles.create'))
+        ->assertOk()
+        ->assertInertia(fn($page) => $page
+            ->component('roles/create')
+            ->has('permissions')
+            ->where('permissions.platform.mixed', ['valid_permission', 'another_valid']));
+});
+
+it('filters out permissions that do not exist in database', function (): void {
+    config(['permissions' => [
+        'platform' => [
+            'test' => [
+                'exists_in_db',
+                'does_not_exist',
+                'also_exists',
+            ],
+        ],
+    ]]);
+
+    Permission::create(['name' => 'exists_in_db']);
+    Permission::create(['name' => 'also_exists']);
+
+    actingAs($this->user)
+        ->get(route('roles.create'))
+        ->assertOk()
+        ->assertInertia(fn($page) => $page
+            ->component('roles/create')
+            ->has('permissions')
+            ->where('permissions.platform.test', ['exists_in_db', 'also_exists']));
 });
