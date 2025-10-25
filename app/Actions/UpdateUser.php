@@ -11,6 +11,7 @@ final readonly class UpdateUser
 {
     public function handle(User $user, UserData $data): void
     {
+        /** @var array<string, mixed> $updates */
         $updates = array_filter($data->toArray(), fn (mixed $value): bool => $value !== null);
 
         if (! empty($updates['email']) && $updates['email'] !== $user->email) {
