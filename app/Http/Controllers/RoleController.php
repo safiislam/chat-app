@@ -53,8 +53,7 @@ final class RoleController extends Controller
             $role->syncPermissions($permissionNames);
         }
 
-        return redirect()
-            ->route('roles.index')
+        return to_route('roles.index')
             ->with('success', $this->getSuccessMessages()['created']);
     }
 
@@ -88,8 +87,7 @@ final class RoleController extends Controller
             $role->syncPermissions($permissionNames);
         }
 
-        return redirect()
-            ->route('roles.index')
+        return to_route('roles.index')
             ->with('success', $this->getSuccessMessages()['updated']);
     }
 
@@ -100,8 +98,7 @@ final class RoleController extends Controller
     {
         $role->delete();
 
-        return redirect()
-            ->route('roles.index')
+        return to_route('roles.index')
             ->with('success', $this->getSuccessMessages()['deleted']);
     }
 

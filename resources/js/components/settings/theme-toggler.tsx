@@ -12,9 +12,16 @@ export function ThemeToggler() {
     };
     return (
         <>
-            <div className="relative flex-1 ">
-                <button onClick={handleChangeTheme} className=" ml-auto dark:text-white text-center block w-fit cursor-pointer">
-                    {appearance === 'light' ? <MoonIcon className='text-zinc-400'></MoonIcon> : <SunIcon className='text-zinc-400'></SunIcon>}
+            <div className="relative flex-1">
+                <button
+                    onClick={handleChangeTheme}
+                    className="ml-auto block w-fit cursor-pointer text-center dark:text-white"
+                >
+                    {appearance === 'light' ? (
+                        <MoonIcon className="text-zinc-400"></MoonIcon>
+                    ) : (
+                        <SunIcon className="text-zinc-400"></SunIcon>
+                    )}
                 </button>
             </div>
         </>

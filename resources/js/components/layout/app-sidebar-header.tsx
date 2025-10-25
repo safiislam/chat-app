@@ -1,4 +1,3 @@
-
 import { Button } from '@/components/ui/button';
 import Divider from '@/components/ui/divide';
 import { SidebarTrigger } from '@/components/ui/sidebar';
@@ -6,9 +5,9 @@ import { type BreadcrumbItem as BreadcrumbItemType } from '@/types';
 import { Input } from '@headlessui/react';
 import { Link } from '@inertiajs/react';
 import { Activity, Info, Plus, Search, Settings } from 'lucide-react';
-import { Breadcrumbs } from './breadcrumbs';
-import { ThemeToggler } from '../settings/theme-toggler';
 import { NavUser } from '../navigation/nav-user';
+import { ThemeToggler } from '../settings/theme-toggler';
+import { Breadcrumbs } from './breadcrumbs';
 
 export function AppSidebarHeader({
     breadcrumbs = [],
