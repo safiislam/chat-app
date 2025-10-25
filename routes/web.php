@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserEmailResetNotification;
@@ -18,6 +19,14 @@ Route::get('/', fn () => Inertia::render('welcome'))->name('home');
 Route::middleware(['auth', 'verified'])->group(function (): void {
     Route::get('dashboard', fn () => Inertia::render('dashboard'))->name('dashboard');
 });
+
+// Role management routes
+Route::get('roles', [RoleController::class, 'index'])->name('roles.index');
+Route::get('roles/create', [RoleController::class, 'create'])->name('roles.create');
+Route::post('roles', [RoleController::class, 'store'])->name('roles.store');
+Route::get('roles/{role}/edit', [RoleController::class, 'edit'])->name('roles.edit');
+Route::put('roles/{role}', [RoleController::class, 'update'])->name('roles.update');
+Route::delete('roles/{role}', [RoleController::class, 'destroy'])->name('roles.destroy');
 
 Route::middleware('auth')->group(function (): void {
     // User...
