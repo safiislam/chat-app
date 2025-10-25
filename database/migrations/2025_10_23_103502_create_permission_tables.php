@@ -128,7 +128,7 @@ return new class extends Migration
         /** @var string|null $cacheStore */
         $cacheStore = config('permission.cache.store');
         /** @var string $cacheKey */
-        $cacheKey = config('permission.cache.key') ?? 'spatie.permission.cache';
+        $cacheKey = config('permission.cache.key', 'spatie.permission.cache');
 
         app(Illuminate\Contracts\Cache\Factory::class)
             ->store($cacheStore !== 'default' ? $cacheStore : null)

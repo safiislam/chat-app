@@ -9,7 +9,6 @@ use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\PermissionRegistrar;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 final class RolesAndPermissionsSeeder extends Seeder
 {
@@ -20,9 +19,25 @@ final class RolesAndPermissionsSeeder extends Seeder
 
         $permissions = config('permissions');
 
+        if (! is_array($permissions)) {
+            return;
+        }
+
         foreach ($permissions as $modules) {
+            if (! is_array($modules)) {
+                continue;
+            }
+
             foreach ($modules as $modulePermissions) {
+                if (! is_array($modulePermissions)) {
+                    continue;
+                }
+
                 foreach ($modulePermissions as $permission) {
+                    if (! is_string($permission)) {
+                        continue;
+                    }
+
                     Permission::query()->firstOrCreate(['name' => $permission]);
                 }
             }
