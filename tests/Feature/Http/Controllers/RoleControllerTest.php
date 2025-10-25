@@ -21,7 +21,7 @@ it('displays the roles index page', function (): void {
     actingAs($this->user)
         ->get(route('roles.index'))
         ->assertOk()
-        ->assertInertia(fn($page) => $page
+        ->assertInertia(fn ($page) => $page
             ->component('roles/index')
             ->has('roles', 2));
 });
@@ -33,7 +33,7 @@ it('displays the create role page', function (): void {
     actingAs($this->user)
         ->get(route('roles.create'))
         ->assertOk()
-        ->assertInertia(fn($page) => $page
+        ->assertInertia(fn ($page) => $page
             ->component('roles/create')
             ->has('allPermissions'));
 });
@@ -111,7 +111,7 @@ it('displays the edit role page', function (): void {
     actingAs($this->user)
         ->get(route('roles.edit', $role))
         ->assertOk()
-        ->assertInertia(fn($page) => $page
+        ->assertInertia(fn ($page) => $page
             ->component('roles/edit')
             ->has('role')
             ->has('allPermissions'));
@@ -201,7 +201,7 @@ it('loads roles with permissions relationship on index', function (): void {
     actingAs($this->user)
         ->get(route('roles.index'))
         ->assertOk()
-        ->assertInertia(fn($page) => $page
+        ->assertInertia(fn ($page) => $page
             ->component('roles/index')
             ->has('roles.0.permissions'));
 });
@@ -213,7 +213,7 @@ it('includes grouped permissions on create page', function (): void {
     actingAs($this->user)
         ->get(route('roles.create'))
         ->assertOk()
-        ->assertInertia(fn($page) => $page
+        ->assertInertia(fn ($page) => $page
             ->component('roles/create')
             ->has('permissions'));
 });
@@ -225,7 +225,7 @@ it('includes grouped permissions on edit page', function (): void {
     actingAs($this->user)
         ->get(route('roles.edit', $role))
         ->assertOk()
-        ->assertInertia(fn($page) => $page
+        ->assertInertia(fn ($page) => $page
             ->component('roles/edit')
             ->has('permissions'));
 });
@@ -236,7 +236,7 @@ it('handles when permissions config is not an array', function (): void {
     actingAs($this->user)
         ->get(route('roles.create'))
         ->assertOk()
-        ->assertInertia(fn($page) => $page
+        ->assertInertia(fn ($page) => $page
             ->component('roles/create')
             ->has('permissions')
             ->where('permissions', []));
@@ -255,7 +255,7 @@ it('handles when config subgroup is not an array', function (): void {
     actingAs($this->user)
         ->get(route('roles.create'))
         ->assertOk()
-        ->assertInertia(fn($page) => $page
+        ->assertInertia(fn ($page) => $page
             ->component('roles/create')
             ->has('permissions'));
 });
@@ -273,7 +273,7 @@ it('handles when config permissions array is not an array', function (): void {
     actingAs($this->user)
         ->get(route('roles.create'))
         ->assertOk()
-        ->assertInertia(fn($page) => $page
+        ->assertInertia(fn ($page) => $page
             ->component('roles/create')
             ->has('permissions'));
 });
@@ -297,7 +297,7 @@ it('filters out non-string permissions from config', function (): void {
     actingAs($this->user)
         ->get(route('roles.create'))
         ->assertOk()
-        ->assertInertia(fn($page) => $page
+        ->assertInertia(fn ($page) => $page
             ->component('roles/create')
             ->has('permissions')
             ->where('permissions.platform.mixed', ['valid_permission', 'another_valid']));
@@ -320,7 +320,7 @@ it('filters out permissions that do not exist in database', function (): void {
     actingAs($this->user)
         ->get(route('roles.create'))
         ->assertOk()
-        ->assertInertia(fn($page) => $page
+        ->assertInertia(fn ($page) => $page
             ->component('roles/create')
             ->has('permissions')
             ->where('permissions.platform.test', ['exists_in_db', 'also_exists']));
