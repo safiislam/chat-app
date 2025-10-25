@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Actions\CreateRole;
+use App\Actions\DeleteRole;
+use App\Actions\UpdateRole;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -41,17 +44,11 @@ final class RoleController extends Controller
     /**
      * Store a newly created role in storage.
      */
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request, CreateRole $createRole): RedirectResponse
     {
         $validatedData = $this->validateRoleRequest($request);
 
-        $role = Role::create(['name' => $validatedData['name']]);
-
-        if (isset($validatedData['permissions']) && is_array($validatedData['permissions'])) {
-            // Convert permission IDs to permission names for syncPermissions
-            $permissionNames = Permission::query()->whereIn('id', $validatedData['permissions'])->pluck('name')->toArray();
-            $role->syncPermissions($permissionNames);
-        }
+        $createRole->handle($validatedData);
 
         return to_route('roles.index')
             ->with('success', $this->getSuccessMessages()['created']);
@@ -75,17 +72,11 @@ final class RoleController extends Controller
     /**
      * Update the specified role in storage.
      */
-    public function update(Request $request, Role $role): RedirectResponse
+    public function update(Request $request, Role $role, UpdateRole $updateRole): RedirectResponse
     {
         $validatedData = $this->validateRoleRequest($request, (int) $role->id);
 
-        $role->update(['name' => $validatedData['name']]);
-
-        if (isset($validatedData['permissions']) && is_array($validatedData['permissions'])) {
-            // Convert permission IDs to permission names for syncPermissions
-            $permissionNames = Permission::query()->whereIn('id', $validatedData['permissions'])->pluck('name')->toArray();
-            $role->syncPermissions($permissionNames);
-        }
+        $updateRole->handle($role, $validatedData);
 
         return to_route('roles.index')
             ->with('success', $this->getSuccessMessages()['updated']);
@@ -94,9 +85,9 @@ final class RoleController extends Controller
     /**
      * Remove the specified role from storage.
      */
-    public function destroy(Role $role): RedirectResponse
+    public function destroy(Role $role, DeleteRole $deleteRole): RedirectResponse
     {
-        $role->delete();
+        $deleteRole->handle($role);
 
         return to_route('roles.index')
             ->with('success', $this->getSuccessMessages()['deleted']);
