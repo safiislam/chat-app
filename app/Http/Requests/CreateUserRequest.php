@@ -13,7 +13,7 @@ use Illuminate\Validation\Rules\Password;
 final class CreateUserRequest extends FormRequest
 {
     /**
-     * @return array<string, array<mixed>|string>
+     *  * @return array<string, array<int, string>>
      */
     public function rules(): array
     {
@@ -25,7 +25,7 @@ final class CreateUserRequest extends FormRequest
                 'lowercase',
                 'max:255',
                 'email',
-                new ValidEmail,
+                new ValidEmail(),
                 Rule::unique(User::class),
             ],
             'password' => [

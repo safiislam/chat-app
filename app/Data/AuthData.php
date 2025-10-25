@@ -23,7 +23,9 @@ final class AuthData extends Data
         public ?string $token = null,
         #[CurrentPassword]
         public ?string $currentPassword = null,
-    ) {}
+    ) {
+        // ..
+    }
 
     /**
      * @return array<string, array<int, mixed>>

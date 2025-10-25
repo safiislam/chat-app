@@ -45,7 +45,7 @@ final class UserData extends Data
         return [
             'email' => [
                 'lowercase',
-                new ValidEmail,
+                new ValidEmail(),
                 Rule::unique(User::class)->ignore($userId),
             ],
             'password' => [

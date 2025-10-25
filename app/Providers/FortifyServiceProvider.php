@@ -15,7 +15,7 @@ final class FortifyServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
-        //
+        // Register any application services.
     }
 
     public function boot(): void

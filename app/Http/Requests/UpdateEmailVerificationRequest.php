@@ -8,5 +8,5 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 final class UpdateEmailVerificationRequest extends EmailVerificationRequest
 {
-    //
+    // No additional rules needed; inherits from EmailVerificationRequest
 }

@@ -17,6 +17,7 @@ final readonly class UserTwoFactorAuthenticationController implements HasMiddlew
 {
     public static function middleware(): array
     {
+        /** @return array<int, Middleware> */
         return Features::optionEnabled(Features::twoFactorAuthentication(), 'confirmPassword')
             ? [new Middleware('password.confirm', only: ['show'])]
             : [];
