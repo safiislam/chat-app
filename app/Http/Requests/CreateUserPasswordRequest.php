@@ -9,9 +9,7 @@ use Illuminate\Validation\Rules\Password;
 
 final class CreateUserPasswordRequest extends FormRequest
 {
-    /**
-     * @return array<string, array<int, string>>
-     */
+    /** @return array<string, list<Password|string|null>> */
     public function rules(): array
     {
         return [

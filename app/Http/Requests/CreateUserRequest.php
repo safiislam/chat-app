@@ -13,7 +13,7 @@ use Illuminate\Validation\Rules\Password;
 final class CreateUserRequest extends FormRequest
 {
     /**
-     *  * @return array<string, array<int, string>>
+     * @return array<string, array<mixed>|string>
      */
     public function rules(): array
     {
