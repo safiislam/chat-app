@@ -17,7 +17,7 @@ it('renders verify email page', function (): void {
 
     $response->assertOk()
         ->assertInertia(fn ($page) => $page
-            ->component('user-email-verification-notification/create')
+            ->component('user/user-email-verification-notification-create')
             ->has('status'));
 });
 
