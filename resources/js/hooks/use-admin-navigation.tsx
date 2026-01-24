@@ -51,6 +51,11 @@ export function useAdminNavigation() {
 
     const testSection: NavItem[] = [
         {
+            title: 'Chat',
+            href: '/chat',
+            icon: CalendarCheck,
+        },
+        {
             title: 'Reservations',
             href: '/reservations',
             icon: CalendarCheck,
