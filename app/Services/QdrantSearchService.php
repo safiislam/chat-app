@@ -39,7 +39,7 @@ class QdrantSearchService
         $http = new Client([
             'base_uri' => 'https://generativelanguage.googleapis.com/v1beta/',
             'headers' => [
-                'x-goog-api-key' => 'AIzaSyAmZI0CqpZM3695f4V7bZ5gb9uJbP2hKjI',
+                'x-goog-api-key' => 'AIzaSyC02_3q2QQBA61DtBVQRv-DU8iXQpehmjs',
                 'Content-Type' => 'application/json',
             ],
         ]);
