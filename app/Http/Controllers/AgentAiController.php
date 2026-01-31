@@ -25,14 +25,12 @@ class AgentAiController
         $message = $request->input('message');
 
         $reply = MyAgent::make()->chat(
-            new UserMessage($message)
+            new UserMessage($message),
         );
 
-        return back()->with([
-            'chat' => [
-                'user' => $message,
-                'ai' => $reply->getContent(), // get plain AI text
-            ]
+        return response([
+            'user' => $message,
+            'ai' => $reply->getContent()
         ]);
     }
     protected function vectorStore(): VectorStoreInterface

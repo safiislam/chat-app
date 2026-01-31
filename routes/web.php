@@ -12,7 +12,9 @@ use App\Http\Controllers\UserEmailVerificationNotificationController;
 use App\Http\Controllers\UserPasswordController;
 use App\Http\Controllers\UserProfileController;
 use App\Http\Controllers\UserTwoFactorAuthenticationController;
+use App\Models\ChatMessage;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
 use Inertia\Inertia;
 
 Route::get('/', fn() => Inertia::render('welcome'))->name('home');
@@ -28,9 +30,15 @@ Route::post('roles', [RoleController::class, 'store'])->name('roles.store');
 Route::get('roles/{role}/edit', [RoleController::class, 'edit'])->name('roles.edit');
 Route::put('roles/{role}', [RoleController::class, 'update'])->name('roles.update');
 Route::delete('roles/{role}', [RoleController::class, 'destroy'])->name('roles.destroy');
+// Route::get('/chat-history', [AgentAiController::class, 'show'])->name('chat-history');
 
 Route::middleware('auth')->group(function (): void {
-    Route::get('chat', fn() => Inertia::render('agent/index'))->name('index.chat');
+    Route::get('/chat', function () {
+        $chatData = ChatMessage::where('thread_id', Session::getId())->get();
+        return Inertia::render('agent/index', [
+            'chatData' => $chatData
+        ]);
+    })->name('index.chat');
     Route::post('chat', [AgentAiController::class, 'chat'])->name('chat');
     // User...
     Route::delete('user', [UserController::class, 'destroy'])->name('user.destroy');
